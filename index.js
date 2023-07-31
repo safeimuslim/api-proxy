@@ -1,7 +1,10 @@
 var express = require("express"),
+  bodyParser = require("body-parser"),
   request = require("request"),
   app = express();
 require("dotenv").config();
+
+app.use(bodyParser.json());
 
 app.all("*", function (req, res, next) {
   // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
@@ -22,6 +25,7 @@ app.all("*", function (req, res, next) {
         method: req.method,
         json: req.body,
         headers: { Authorization: req.header("Authorization") },
+        body: req.body,
       },
       function (error, response, body) {
         if (error) {
